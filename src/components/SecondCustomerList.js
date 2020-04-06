@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MaterialTable from "material-table";
-import AddBox from "@material-ui/icons/AddBox";
 
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
@@ -39,7 +38,6 @@ export default function CustomerList() {
       columns={columns}
       data={customers}
       editable={{
-        icon:<AddBox/>,
         onRowAdd: (newData) =>
           new Promise((resolve) => {
             setTimeout(() => {
@@ -51,7 +49,7 @@ export default function CustomerList() {
               });
             }, 600);
           }),
-     onRowUpdate: (newData, oldData) =>
+        onRowUpdate: (newData, oldData) =>
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
