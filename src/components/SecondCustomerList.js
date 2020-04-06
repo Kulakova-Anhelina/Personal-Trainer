@@ -25,6 +25,7 @@ export default function CustomerList() {
     { title: "Adress", field: "streetaddress" },
     { title: "Postcode", field: "postcode", type: "numeric" },
     { title: "City", field: "city" },
+    {}
   ];
 
   

@@ -1,51 +1,55 @@
-import React, { useState, useEffect } from "react";
-import ReactTable from "react-table-v6";
-import "react-table-v6/react-table.css";
-import { makeStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DeleteIcon from "@material-ui/icons/Delete";
+import IconButton from "@material-ui/core/IconButton";
 
+export default function DeleteCustomer(props) {
+  const [open, setOpen] = useState(false);
 
-export default function CustomerList() {
-  const [customers, setCustomers] = useState([]);
-
-  useEffect(() => {
-    fetchDate();
-  }, []);
-
-  const fetchDate = () => {
-    fetch("https://customerrest.herokuapp.com/api/customers")
-      .then((response) => response.json())
-      .then((responseData) => {
-        setCustomers(responseData.content);
-        console.log(responseData.content);
-      });
+  const deleteCustomerHandler = (value) => {
+    props.deleteCustomerHandler(value);
+    handleClose();
   };
 
-  const columns = [
-    { Header: "First Name", accessor: "firstname" },
-    { Header: "Last Name", accessor: "lastname" },
-    { Header: "Email", accessor: "email" },
-    { Header: "Phone", accessor: "phone", type: "numeric" },
-    { Header: "Adress", accessor: "streetaddress" },
-    { Header: "Postcode", accessor: "postcode" },
-    { Header: "City", accessor: "city" },
-    
-    
-  ];
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div>
-      <ReactTable
-        filterable={true}
-        defaultPageSize={10}
-        data={customers}
-        columns={columns}
-      />
-      />
+      <IconButton color="secondary" onClick={handleClickOpen}>
+        <DeleteIcon />
+      </IconButton>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">Delete Customer</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this customer? Please confirm
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            No
+          </Button>
+          <Button onClick={deleteCustomerHandler} color="secondary" autoFocus>
+            Yes
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
