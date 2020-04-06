@@ -3,7 +3,8 @@ import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
 import Snackbar from "@material-ui/core/Snackbar";
 import AddCustomer from "./AddCustomer";
-import DeleteCustomer from './DeleteCustomer';
+import DeleteCustomer from "./DeleteCustomer";
+import EditCustomer from "./EditCustomer";
 
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
@@ -51,6 +52,20 @@ export default function CustomerList() {
     setOpen(false);
   };
 
+  const updateCustomerHandler = (customers, link) => {
+    fetch(link, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(customers),
+    })
+      .then((response) => fetchData())
+      .catch((err) => console.log(err))
+      .then((response) => {
+        setMsg("Customer was edited");
+        setOpen(true);
+      });
+  };
+
   const columns = [
     { Header: "First Name", accessor: "firstname" },
     { Header: "Last Name", accessor: "lastname" },
@@ -61,13 +76,26 @@ export default function CustomerList() {
     { Header: "City", accessor: "city" },
 
     {
-      accessor: "links[0].href",
       sortable: false,
       filterable: false,
       minWidth: 60,
 
       Cell: (row) => (
-        <DeleteCustomer deleteCustomerHandler={() =>deleteCustomerHandler(row.value)} />
+        <DeleteCustomer
+          deleteCustomerHandler={() => deleteCustomerHandler(row.value)}
+        />
+      ),
+    },
+    {
+      sortable: false,
+      filterable: false,
+      minWidth: 60,
+
+      Cell: (row) => (
+        <EditCustomer
+          updateCustomerHandler={updateCustomerHandler}
+          customers={row.original}
+        />
       ),
     },
   ];
