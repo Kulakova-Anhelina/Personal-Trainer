@@ -8,6 +8,8 @@ import InputBase from "@material-ui/core/InputBase";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
+import "./App.css";
+// import Training from './components/Training'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -80,7 +82,7 @@ function App() {
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-          Personal Tarainer
+            Personal Tarainer
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -98,6 +100,7 @@ function App() {
         </Toolbar>
       </AppBar>
       <CustomerList />
+      {/* <Training/> */}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,8 +9,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 
 export default function EditCustomer(props) {
-  const [open, setOpen] = React.useState(false);
-  const [customer, setCustomer] = React.useState({
+  const [open, setOpen] = useState(false);
+  const [customer, setCustomer] = useState({
     firstname: "",
     lastname: "",
     email: "",

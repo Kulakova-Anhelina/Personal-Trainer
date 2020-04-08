@@ -5,6 +5,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import AddCustomer from "./AddCustomer";
 import DeleteCustomer from "./DeleteCustomer";
 import EditCustomer from "./EditCustomer";
+import AddTraining from "./AddTraining"
 
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
@@ -14,7 +15,7 @@ export default function CustomerList() {
   useEffect(() => {
     fetchData();
   }, []);
-
+//fetch data from the customers API
   const fetchData = () => {
     fetch("https://customerrest.herokuapp.com/api/customers")
       .then((response) => response.json())
@@ -24,6 +25,7 @@ export default function CustomerList() {
       });
   };
 
+  //Delete customer works
   const deleteCustomerHandler = (link) => {
     fetch(link, { method: "DELETE" })
       .then((_) => fetchData())
@@ -32,13 +34,15 @@ export default function CustomerList() {
         setOpen(true);
       })
       .catch((err) => console.error(err));
+    console.log(link);
   };
 
-  const saveCustomer = (customers) => {
+  // add and save customer works
+  const saveCustomer = (customer) => {
     fetch("https://customerrest.herokuapp.com/api/customers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(customers),
+      body: JSON.stringify(customer),
     })
       .then((_) => fetchData())
       .catch((err) => console.log(err))
@@ -48,15 +52,31 @@ export default function CustomerList() {
       });
   };
 
+  //add and save customer - still editing
+  const saveTraining = (training) => {
+    fetch ("https://customerrest.herokuapp.com/api/trainings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(training),
+    })
+      .then((_) => fetchData())
+      .catch((err) => console.log(err))
+      .then((_) => {
+        setMsg("Taining is saved");
+        setOpen(true);
+      });
+  };
+
   const handleClose = () => {
     setOpen(false);
   };
 
-  const updateCustomerHandler = (customers, link) => {
+  // edit customer - works
+  const updateCustomerHandler = (customer, link) => {
     fetch(link, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(customers),
+      body: JSON.stringify(customer),
     })
       .then((_) => fetchData())
       .catch((err) => console.log(err))
@@ -66,19 +86,14 @@ export default function CustomerList() {
       });
   };
 
-  const columns = [
-    { Header: "First Name", accessor: "firstname" },
-    { Header: "Last Name", accessor: "lastname" },
-    { Header: "Email", accessor: "email" },
-    { Header: "Phone", accessor: "phone", type: "numeric" },
-    { Header: "Adress", accessor: "streetaddress" },
-    { Header: "Postcode", accessor: "postcode" },
-    { Header: "City", accessor: "city" },
 
+
+  const columns = [
     {
+      accessor: "links[0]",
       sortable: false,
       filterable: false,
-      minWidth: 60,
+      minWidth: 30,
 
       Cell: (row) => (
         <DeleteCustomer
@@ -89,7 +104,7 @@ export default function CustomerList() {
     {
       sortable: false,
       filterable: false,
-      minWidth: 60,
+      minWidth: 30,
 
       Cell: (row) => (
         <EditCustomer
@@ -98,6 +113,24 @@ export default function CustomerList() {
         />
       ),
     },
+    {sortable: false,
+      filterable: false,
+      minWidth: 100,
+
+      Cell: (row) => (
+        <AddTraining
+          saveTraining= {saveTraining}
+          customer={row.original}
+        />
+      ),
+    },
+    { Header: "First Name", accessor: "firstname" },
+    { Header: "Last Name", accessor: "lastname" },
+    { Header: "Email", accessor: "email" },
+    { Header: "Phone", accessor: "phone", type: "numeric" },
+    { Header: "Adress", accessor: "streetaddress" },
+    { Header: "Postcode", accessor: "postcode" },
+    { Header: "City", accessor: "city" },
   ];
 
   return (
