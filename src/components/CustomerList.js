@@ -20,7 +20,7 @@ export default function CustomerList() {
       .then((response) => response.json())
       .then((responseData) => {
         setCustomers(responseData.content);
-        console.log(responseData.content);
+        // console.log(responseData.content);
       });
   };
 
@@ -40,9 +40,9 @@ export default function CustomerList() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(customers),
     })
-      .then((response) => fetchData())
+      .then((_) => fetchData())
       .catch((err) => console.log(err))
-      .then((response) => {
+      .then((_) => {
         setMsg("Customer added");
         setOpen(true);
       });
@@ -58,9 +58,9 @@ export default function CustomerList() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(customers),
     })
-      .then((response) => fetchData())
+      .then((_) => fetchData())
       .catch((err) => console.log(err))
-      .then((response) => {
+      .then((_) => {
         setMsg("Customer was edited");
         setOpen(true);
       });
@@ -94,7 +94,7 @@ export default function CustomerList() {
       Cell: (row) => (
         <EditCustomer
           updateCustomerHandler={updateCustomerHandler}
-          customers={row.original}
+          customer={row.original}
         />
       ),
     },

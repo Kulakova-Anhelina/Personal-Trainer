@@ -13,7 +13,7 @@ export default function CustomerList() {
       .then((response) => response.json())
       .then((responseData) => {
         setCustomers(responseData.content);
-        console.log(responseData.content);
+        //console.log(responseData.content);
       });
   };
 

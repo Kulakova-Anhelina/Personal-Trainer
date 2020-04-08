@@ -8,9 +8,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 
-export default function AddCustomer(props) {
+export default function EditCustomer(props) {
   const [open, setOpen] = React.useState(false);
-  const [customers, setCustomers] = React.useState({
+  const [customer, setCustomer] = React.useState({
     firstname: "",
     lastname: "",
     email: "",
@@ -21,20 +21,20 @@ export default function AddCustomer(props) {
   });
 
   const updateCustomerHandler = () => {
-    props.updateCustomerHandler(customers, props.customers.links.customers.href);
+    props.updateCustomerHandler(customer, props.customer.links[0].href);
     handleClose();
   };
   const handleClickOpen = () => {
+    console.log(props.customer)
     setOpen(true);
-    console.log(props.customers)
-    setCustomers({
-        firstname: props.customers.firstname,
-        lastname: props.customers.lastname,
-        email: props.customers.email,
-        phone: props.customers.phone,
-        streetaddress: props.customers.streetaddress,
-        postcode: props.customers.postcode,
-        city: props.customers.city,
+    setCustomer({
+        firstname: props.customer.firstname,
+        lastname: props.customer.lastname,
+        email: props.customer.email,
+        phone: props.customer.phone,
+        streetaddress: props.customer.streetaddress,
+        postcode: props.customer.postcode,
+        city: props.customer.city,
     })
   };
 
@@ -42,12 +42,11 @@ export default function AddCustomer(props) {
     setOpen(false);
   };
   const handleInputChange = (event) => {
-    setCustomers({ ...customers, [event.target.name]: event.target.value });
+    setCustomer({ ...customer, [event.target.name]: event.target.value });
   };
   return (
     <div>
       <IconButton
-        variant="outlined"
         color="primary"
         onClick={handleClickOpen}
       >
@@ -65,7 +64,7 @@ export default function AddCustomer(props) {
             margin="dense"
             name="firstname"
             label="First Name"
-            value={customers.firstname}
+            value={customer.firstname}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />
@@ -73,7 +72,7 @@ export default function AddCustomer(props) {
             margin="dense"
             name="lastname"
             label="Last Name"
-            value={customers.lastname}
+            value={customer.lastname}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />
@@ -81,7 +80,7 @@ export default function AddCustomer(props) {
             margin="dense"
             name="email"
             label="Email"
-            value={customers.email}
+            value={customer.email}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />
@@ -89,7 +88,7 @@ export default function AddCustomer(props) {
             margin="dense"
             name="phone"
             label="Phone"
-            value={customers.phone}
+            value={customer.phone}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />
@@ -97,7 +96,7 @@ export default function AddCustomer(props) {
             margin="dense"
             name="streetaddress"
             label="Street address"
-            value={customers.streetaddress}
+            value={customer.streetaddress}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />
@@ -105,7 +104,7 @@ export default function AddCustomer(props) {
             margin="dense"
             name="postcode"
             label="Postcode"
-            value={customers.postcode}
+            value={customer.postcode}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />
@@ -113,7 +112,7 @@ export default function AddCustomer(props) {
             margin="dense"
             name="city"
             label="City"
-            value={customers.city}
+            value={customer.city}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />

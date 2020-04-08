@@ -17,6 +17,7 @@ export default function DeleteCustomer(props) {
   };
 
   const handleClickOpen = () => {
+
     setOpen(true);
   };
 
