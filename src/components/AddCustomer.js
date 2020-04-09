@@ -18,7 +18,7 @@ export default function AddCustomer(props) {
     city: "",
   });
 
-  const addCustomer = () => {
+  const saveCustomer = () => {
     props.saveCustomer(customer);
     handleClose();
   };
@@ -111,7 +111,7 @@ export default function AddCustomer(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={addCustomer} color="primary">
+          <Button onClick={saveCustomer} color="primary">
             Save
           </Button>
         </DialogActions>

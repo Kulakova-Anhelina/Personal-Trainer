@@ -7,6 +7,7 @@ import DeleteCustomer from "./DeleteCustomer";
 import EditCustomer from "./EditCustomer";
 import AddTraining from "./AddTraining"
 
+
 export default function CustomerList() {
   const [customers, setCustomers] = useState([]);
   const [msg, setMsg] = useState("");
@@ -87,7 +88,6 @@ export default function CustomerList() {
   };
 
 
-
   const columns = [
     {
       accessor: "links[0]",
@@ -151,3 +151,5 @@ export default function CustomerList() {
     </div>
   );
 }
+
+

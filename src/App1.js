@@ -8,8 +8,7 @@ import { fade, makeStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import "./App.css";
-//import Training from './pages/Training'
-import CustomerList from "./pages/CustomerList";
+import Training from './components/Training'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -99,7 +98,7 @@ function App() {
           </div>
         </Toolbar>
       </AppBar>
-      <CustomerList />
+      <Training/>
       {/* <Training/> */}
     </div>
   );
