@@ -81,7 +81,7 @@ export default function Training() {
   const [state, setState] = useState({
     columns: [
       { title: "Activity", field: "activity" },
-      { title: "Date", field: "date", render: (row)=> moment(row.value).format("MMMM Do YYYY, h:mm:ss a") },
+      { title: "Date", field: "date", render: (rowData)=> moment(rowData.date).format("MMMM Do YYYY, h:mm:ss a") },
       { title: "Duration", field: "duration" },
      { title: "Customer", field: "customer",
       render: (rowData) => rowData.customer.firstname + " " + rowData.customer.lastname}

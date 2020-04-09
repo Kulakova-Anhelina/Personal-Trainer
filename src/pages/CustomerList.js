@@ -16,8 +16,9 @@ import SaveAlt from "@material-ui/icons/SaveAlt";
 import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { forwardRef } from "react";
-import AddCustomer from "../components/AddCustomer"
+import AddCustomer from "../components/AddCustomer";
 import Snackbar from "@material-ui/core/Snackbar";
+import DeleteCustomer from '../components/DeleteCustomer'
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -78,7 +79,6 @@ export default function CustomerList() {
   };
 
   const columns = [
-
     { title: "First Name", field: "firstname" },
     { title: "Last Name", field: "lastname" },
     { title: "Email", field: "email" },
@@ -86,6 +86,13 @@ export default function CustomerList() {
     { title: "Adress", field: "streetaddress" },
     { title: "Postcode", field: "postcode", type: "numeric" },
     { title: "City", field: "city" },
+  ];
+
+  const actions = [
+    {
+      icon: tableIcons.Delete,
+      toolip: "Delete User",
+      onClick : (rowData) => deleteCustomerHandler(rowData.value)}
   ];
   // add and save customer works
   const saveCustomer = (customer) => {
@@ -104,18 +111,17 @@ export default function CustomerList() {
 
   return (
     <div>
-     <AddCustomer saveCustomer={saveCustomer} />
+      <AddCustomer saveCustomer={saveCustomer} />
       <MaterialTable
-     
         icons={tableIcons}
         title="Customers"
         options={{
           search: true,
-          sorting: true
+          sorting: true,
         }}
         columns={columns}
         data={customers}
-    
+        actions ={actions}
       />
 
       <Snackbar
