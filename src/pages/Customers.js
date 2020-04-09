@@ -67,7 +67,7 @@ export default function Customers() {
   //Delete customer works
   const deleteCustomerHandler = (link) => {
     fetch(link, { method: "DELETE" })
-      .then((_) => fetchData())
+    .then((_) => fetchData())
       .then((_) => {
         setMsg("Customer deleted");
         setOpen(true);
@@ -98,14 +98,6 @@ export default function Customers() {
     { title: "Adress", field: "streetaddress" },
     { title: "Postcode", field: "postcode", type: "numeric" },
     { title: "City", field: "city" },
-  ];
-
-  const actions = [
-    {
-      icon: tableIcons.Delete,
-      toolip: "Delete User",
-      onClick: (rowData) => deleteCustomerHandler(rowData.value),
-    },
   ];
   // add and save customer works
   const saveCustomer = (customer) => {
@@ -164,8 +156,12 @@ export default function Customers() {
         }}
         columns={columns}
         data={customers}
-        actions={actions}
         editable={{
+          onRowDelete: (oldData) => 
+            new Promise((resolve) => {
+              deleteCustomerHandler(oldData);
+              resolve() ;
+          }),
           onRowAdd: (newData) => 
             new Promise((resolve) => {
               saveCustomer(newData);

@@ -78,6 +78,7 @@ export default function Training() {
     setOpen(false);
   };
 
+
   const [state, setState] = useState({
     columns: [
       { title: "Activity", field: "activity" },
@@ -111,7 +112,7 @@ export default function Training() {
     <div>
       <MaterialTable
         icons={tableIcons}
-        title="Customers"
+        title="Trainings"
         options={{
           search: true,
           sorting: true,
