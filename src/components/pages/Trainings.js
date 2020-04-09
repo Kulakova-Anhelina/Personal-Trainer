@@ -17,7 +17,7 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { forwardRef } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
-import * as moment from 'moment';
+import * as moment from "moment";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -63,16 +63,16 @@ export default function Training() {
       });
   };
 
-  // const deleteTrainingsHandler = (link) => {
-  //   console.log(link);
-  //   fetch(link, { method: "DELETE" })
-  //     .then((_) => fetchTraining())
-  //     .then((_) => {
-  //       setMsg("Training deleted");
-  //       setOpen(true);
-  //     })
-  //     .catch((err) => console.error(err));
-  // };
+  const deleteTrainingsHandler = (link) => {
+    console.log(link);
+    fetch(link, { method: "DELETE" })
+      .then((_) => fetchTraining())
+      .then((_) => {
+        setMsg("Training deleted");
+        setOpen(true);
+      })
+      .catch((err) => console.error(err));
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -81,73 +81,45 @@ export default function Training() {
   const [state, setState] = useState({
     columns: [
       { title: "Activity", field: "activity" },
-      { title: "Date", field: "date", render: (rowData)=> moment(rowData.date).format("MMMM Do YYYY, h:mm:ss a") },
+      {
+        title: "Date",
+        field: "date",
+        render: (rowData) =>
+          moment.utc(rowData.date).format("MMMM Do YYYY, h:mm:ss a"),
+      },
       { title: "Duration", field: "duration" },
-     { title: "Customer", field: "customer",
-      render: (rowData) => rowData.customer.firstname + " " + rowData.customer.lastname}
+      {
+        title: "Customer",
+        field: "customer",
+        render: (rowData) =>
+          rowData.customer.firstname + " " + rowData.customer.lastname,
+      },
+    ],
+    actions: [
+      {
+        icon: tableIcons.Delete,
+        tooltip: "Delete Training",
+        onClick: (event, rowData) => deleteTrainingsHandler(rowData),
+      },
     ],
   });
-
-  // const columns = [
-  //   { Header: "Activity", accessor: "activity" },
-  //   {
-  //     Header: "Date",
-  //     accessor: "date",
-  //     Cell: (row) => (
-  //       <span>{moment(row.value).format("MMMM Do YYYY, h:mm:ss a")}</span>
-  //     ),
-  //   },
-  //   { Header: "Duration(min)", accessor: "duration" },
-  //   {
-  //     Header: "Customer",
-  //     acessor: "customer",
-  //     Cell: (value) => {
-  //       return (
-  //         <div>
-  //           <span>{value.firstname} </span>
-  //           <span>{value.lastname}</span>
-  //         </div>
-  //       );
-  //     },
-  //   },
-  //   {
-  //     acessor: "links[0].href",
-  //     sortable: false,
-  //     filterable: false,
-  //     minWidth: 60,
-  //     Cell: (row) => (
-  //       <DeleteTraining
-  //         deleteTrainingsHandler={() =>
-  //           deleteTrainingsHandler(row.original.links[0].href)
-  //         }
-  //       />
-  //     ),
-  //   },
-  // ];
 
   if (!isReady) {
     return <p>Loading...</p>;
   }
   return (
     <div>
-      {/* <ReactTable
-        filterable={true}
-        defaultPageSize={10}
-        data={training}
-        columns={columns}
-      /> */}
       <MaterialTable
-     
-     icons={tableIcons}
-     title="Customers"
-     options={{
-       search: true,
-       sorting:true
-     }}
-     columns={state.columns}
-     data={training}
- 
-   />
+        icons={tableIcons}
+        title="Customers"
+        options={{
+          search: true,
+          sorting: true,
+        }}
+        columns={state.columns}
+        data={training}
+        actions={state.actions}
+      />
       <Snackbar
         open={open}
         autoHideDuration={3000}
