@@ -27,11 +27,8 @@ export default function AddTraining(props) {
   const [training, setTraining] = useState({
     activity: "",
     date: new Date().toISOString(),
-    duration: "",
-    customer: props.customerId
+    duration: ""
   });
-
-  
 
   const addTraining = () => {
     props.saveTraining(training);
@@ -76,10 +73,10 @@ export default function AddTraining(props) {
           <form className={classes.container} noValidate>
             <TextField
               id="datetime-local"
-              label="Book time for training"
+              label="Next appointment"
               type="datetime-local"
               defaultValue={
-                <Moment format="MMMM Do YYYY, h:mm:ss a">{training.date}</Moment>
+                <Moment format="YYYY/MM/DD">{training.date}</Moment>
               }
               className={classes.textField}
               InputLabelProps={{
@@ -92,6 +89,14 @@ export default function AddTraining(props) {
             name="duration"
             label="Duration"
             value={training.duration}
+            onChange={(e) => handleInputChange(e)}
+            fullWidth
+          />
+          <TextField
+            margin="dense"
+            name="Customer"
+            label="customer"
+            value={training.customer}
             onChange={(e) => handleInputChange(e)}
             fullWidth
           />

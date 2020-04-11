@@ -65,7 +65,7 @@ export default function Training() {
 
   const deleteTrainingsHandler = (link) => {
     console.log(link);
-    fetch(link, { method: "DELETE" })
+    fetch("https://customerrest.herokuapp.com/api/trainings/" + link, { method: "DELETE" })
       .then((_) => fetchTraining())
       .then((_) => {
         setMsg("Training deleted");
@@ -95,14 +95,7 @@ export default function Training() {
         render: (rowData) =>
           rowData.customer.firstname + " " + rowData.customer.lastname,
       },
-    ],
-    actions: [
-      {
-        icon: tableIcons.Delete,
-        tooltip: "Delete Training",
-        onClick: (event, rowData) => deleteTrainingsHandler(rowData),
-      },
-    ],
+    ]
   });
 
   if (!isReady) {
@@ -119,7 +112,12 @@ export default function Training() {
         }}
         columns={state.columns}
         data={training}
-        actions={state.actions}
+      editable = {{
+          onRowDelete: (link) =>
+            new Promise((resolve) => {
+              deleteTrainingsHandler(link.id);
+              resolve();
+            })}}
       />
       <Snackbar
         open={open}

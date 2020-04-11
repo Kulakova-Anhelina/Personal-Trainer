@@ -17,6 +17,9 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { forwardRef } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
+import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
+import AddTraining from "../components/AddTraining";
+import CustomerTrainings from "../components/CustomerTrainings"
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -51,12 +54,16 @@ export default function Customers() {
     fetchData();
   }, []);
 
+
+  // main function render the data from the database
+
   const fetchData = () => {
     fetch("https://customerrest.herokuapp.com/api/customers")
       .then((response) => response.json())
       .then((responseData) => {
         setCustomers(responseData.content);
         //console.log(responseData.content);
+    
       });
   };
 
@@ -64,10 +71,10 @@ export default function Customers() {
     setOpen(false);
   };
 
-  //Delete customer works
+  //Delete customer 
   const deleteCustomerHandler = (link) => {
     fetch(link, { method: "DELETE" })
-    .then((_) => fetchData())
+      .then((_) => fetchData())
       .then((_) => {
         setMsg("Customer deleted");
         setOpen(true);
@@ -76,30 +83,21 @@ export default function Customers() {
     console.log(link);
   };
 
+  //add customer
   const addCustomer = (customer) => {
     fetch("https://customerrest.herokuapp.com/api/customers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(customer),
     })
-    .then(_=> fetchData())
-    .then((_) => {
-      setMsg("Customer added");
-      setOpen(true);
-    })
-    .catch((err) => console.log(err)); 
+      .then((_) => fetchData())
+      .then((_) => {
+        setMsg("Customer added");
+        setOpen(true);
+      })
+      .catch((err) => console.log(err));
   };
 
-  const columns = [
-    { title: "First Name", field: "firstname" },
-    { title: "Last Name", field: "lastname" },
-    { title: "Email", field: "email" },
-    { title: "Phone", field: "phone", type: "numeric" },
-    { title: "Adress", field: "streetaddress" },
-    { title: "Postcode", field: "postcode", type: "numeric" },
-    { title: "City", field: "city" },
-  ];
-  // add and save customer works
   const saveCustomer = (customer) => {
     const newCustomer = {
       firstname: customer.firstname,
@@ -110,11 +108,10 @@ export default function Customers() {
       postcode: customer.postcode,
       city: customer.city,
     };
-    addCustomer(newCustomer)
- 
+    addCustomer(newCustomer);
   };
 
-
+  //edit customer
   const updateCustomerHandler = (customer, link) => {
     fetch(link, {
       method: "PUT",
@@ -129,8 +126,8 @@ export default function Customers() {
       });
   };
 
-  const updateCustomer = (customer) =>{
-    const editCustomer ={
+  const updateCustomer = (customer) => {
+    const editCustomer = {
       firstname: customer.firstname,
       lastname: customer.lastname,
       email: customer.email,
@@ -138,12 +135,66 @@ export default function Customers() {
       streetaddress: customer.streetaddress,
       postcode: customer.postcode,
       city: customer.city,
-    }
-    updateCustomerHandler( editCustomer, customer.links[0].href)
+    };
+    updateCustomerHandler(editCustomer, customer.links[0].href)
       .then((_) => fetchData())
-      .catch((err) => console.log(err))
-    
-  }
+      .catch((err) => console.log(err));
+  };
+
+//add training
+
+const addTraining =(training)=>{
+  fetch("https://customerrest.herokuapp.com/api/trainings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(training),
+  })
+    .then((_) => fetchData())
+    .then((_) => {
+      setMsg("Training added");
+      setOpen(true);
+    })
+    .catch((err) => console.log(err));
+
+}
+
+const saveTraining = (training) => {
+
+  addTraining(training)
+ 
+};
+
+
+
+
+
+
+  const [state, setState] = useState({
+    detailPanel: [
+      {
+        icon: () => <FitnessCenterIcon />,
+        tooltip: "Show trainings",
+        render: (rowData) => <CustomerTrainings link={rowData} />,
+      },
+    ],
+    columns: [
+      {
+        title: "",
+        field: "links[0].href",
+        render: (rowData) => 
+        <AddTraining 
+        saveTraining = {saveTraining}
+        customer={rowData.links[0].href} />,
+      },
+      { title: "First Name", field: "firstname" },
+      { title: "Last Name", field: "lastname" },
+      { title: "Email", field: "email" },
+      { title: "Phone", field: "phone", type: "numeric" },
+      { title: "Adress", field: "streetaddress" },
+      { title: "Postcode", field: "postcode", type: "numeric" },
+      { title: "City", field: "city" },
+    ],
+  });
 
   return (
     <div>
@@ -154,24 +205,25 @@ export default function Customers() {
           search: true,
           sorting: true,
         }}
-        columns={columns}
+        columns={state.columns}
+        detailPanel={state.detailPanel}
         data={customers}
         editable={{
-          onRowDelete: (oldData) => 
+          onRowDelete: (link) =>
             new Promise((resolve) => {
-              deleteCustomerHandler(oldData);
-              resolve() ;
-          }),
-          onRowAdd: (newData) => 
+              deleteCustomerHandler(link.links[0].href);
+              resolve();
+            }),
+          onRowAdd: (newData) =>
             new Promise((resolve) => {
               saveCustomer(newData);
-              resolve() ;
-          }),
-          onRowUpdate: (newData,_) => 
+              resolve();
+            }),
+          onRowUpdate: (newData, _) =>
             new Promise((resolve) => {
               updateCustomer(newData);
               resolve();
-            })
+            }),
         }}
       />
 
