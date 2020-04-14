@@ -54,9 +54,11 @@ export default function Customers() {
     fetchData();
   }, []);
 
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-  // main function render the data from the database
-
+//take customers from database
   const fetchData = () => {
     fetch("https://customerrest.herokuapp.com/api/customers")
       .then((response) => response.json())
@@ -65,10 +67,6 @@ export default function Customers() {
         //console.log(responseData.content);
     
       });
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   //Delete customer 
@@ -168,13 +166,13 @@ const saveTraining = (training) => {
 
 
 
-
   const [state, setState] = useState({
     detailPanel: [
       {
-        icon: () => <FitnessCenterIcon />,
+       
         tooltip: "Show trainings",
-        render: (rowData) => <CustomerTrainings link={rowData} />,
+        render: (rowData) => <CustomerTrainings link={rowData.links[2].href} />,
+
       },
     ],
     columns: [

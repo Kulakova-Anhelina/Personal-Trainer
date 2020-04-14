@@ -18,7 +18,9 @@ export default function Timetable() {
   useEffect(() => {
     getData();
   }, []);
-  console.log( state);
+
+  
+  console.log(state);
   const getData = () => {
     fetch(url)
       .then((response) => response.json())
@@ -31,7 +33,8 @@ export default function Timetable() {
             resources: data.customer.firstname + " " + data.customer.lastname,
           }))
         );
-      });
+      })
+      .catch((err) => console.log(err));
   };
 
   const localizer = momentLocalizer(moment);
