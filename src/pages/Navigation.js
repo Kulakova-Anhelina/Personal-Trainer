@@ -19,9 +19,12 @@ import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
+import HomeIcon from '@material-ui/icons/Home';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import Customers from "./Customers";
 import Trainings from "./Trainings";
 import Timetable from "./Timetable";
+import Statistics from "./Statistics"
 
 const drawerWidth = 240;
 
@@ -141,6 +144,12 @@ export default function PersistentDrawerLeft() {
             </div>
             <Divider />
             <List>
+            <ListItem component={Link} to={"/"}>
+                <ListItemIcon>
+                  <HomeIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Home" />
+              </ListItem>
               <ListItem component={Link} to={"/Customers"}>
                 <ListItemIcon>
                   <SupervisedUserCircleIcon />
@@ -159,6 +168,12 @@ export default function PersistentDrawerLeft() {
                 </ListItemIcon>
                 <ListItemText primary="Timetable" />
               </ListItem>
+              <ListItem component={Link} to={"/Statistics"}>
+                <ListItemIcon>
+                  <EqualizerIcon/>
+                </ListItemIcon>
+                <ListItemText primary="Statistics" />
+              </ListItem>
             </List>
           </Drawer>
         </nav>
@@ -174,6 +189,7 @@ export default function PersistentDrawerLeft() {
             <Route path="/Customers" render={() => <Customers />} />
             <Route path="/Trainings" render={() => <Trainings />} />
             <Route path="/Timetable" render={() => <Timetable />} />
+            <Route path="/Statistics" render={() => <Statistics/>} />
           </Switch>
         </main>
       </BrowserRouter>

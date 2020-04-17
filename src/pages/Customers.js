@@ -17,9 +17,8 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { forwardRef } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
-import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import AddTraining from "../components/AddTraining";
-import CustomerTrainings from "../components/CustomerTrainings"
+import CustomerTrainings from "../components/CustomerTrainings";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -58,18 +57,17 @@ export default function Customers() {
     setOpen(false);
   };
 
-//take customers from database
+  //take customers from database
   const fetchData = () => {
     fetch("https://customerrest.herokuapp.com/api/customers")
       .then((response) => response.json())
       .then((responseData) => {
         setCustomers(responseData.content);
         //console.log(responseData.content);
-    
       });
   };
 
-  //Delete customer 
+  //Delete customer
   const deleteCustomerHandler = (link) => {
     fetch(link, { method: "DELETE" })
       .then((_) => fetchData())
@@ -139,50 +137,43 @@ export default function Customers() {
       .catch((err) => console.log(err));
   };
 
-//add training
+  //add training
 
-const addTraining =(training)=>{
-  fetch("https://customerrest.herokuapp.com/api/trainings", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(training),
-  })
-    .then((_) => fetchData())
-    .then((_) => {
-      setMsg("Training added");
-      setOpen(true);
+  const addTraining = (training) => {
+    fetch("https://customerrest.herokuapp.com/api/trainings", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(training),
     })
-    .catch((err) => console.log(err));
+      .then((_) => fetchData())
+      .then((_) => {
+        setMsg("Training added");
+        setOpen(true);
+      })
+      .catch((err) => console.log(err));
+  };
 
-}
-
-const saveTraining = (training) => {
-
-  addTraining(training)
- 
-};
-
-
-
-
+  const saveTraining = (training) => {
+    addTraining(training);
+  };
 
   const [state, setState] = useState({
     detailPanel: [
       {
-       
         tooltip: "Show trainings",
         render: (rowData) => <CustomerTrainings link={rowData.links[2].href} />,
-
       },
     ],
     columns: [
       {
         title: "",
         field: "links[0].href",
-        render: (rowData) => 
-        <AddTraining 
-        saveTraining = {saveTraining}
-        customer={rowData.links[0].href} />,
+        render: (rowData) => (
+          <AddTraining
+            saveTraining={saveTraining}
+            customer={rowData.links[0].href}
+          />
+        ),
       },
       { title: "First Name", field: "firstname" },
       { title: "Last Name", field: "lastname" },

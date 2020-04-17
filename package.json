@@ -8,9 +8,11 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "loadash": "^1.0.0",
     "material-table": "^1.57.2",
     "moment": "^2.24.0",
     "react": "^16.13.1",
+    "react-bar-chart": "^0.1.2",
     "react-big-calendar": "^0.24.3",
     "react-dom": "^16.13.1",
     "react-google-calendar-api": "^1.0.11",
@@ -19,7 +21,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-table-v6": "^6.8.6",
-    "react_google_calendar": "^2.2.4444"
+    "react_google_calendar": "^2.2.4444",
+    "recharts": "^1.8.5"
   },
   "scripts": {
     "start": "react-scripts start",
