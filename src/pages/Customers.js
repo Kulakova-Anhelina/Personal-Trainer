@@ -167,7 +167,6 @@ export default function Customers() {
     columns: [
       {
         title: "",
-        field: "links[0].href",
         render: (rowData) => (
           <AddTraining
             saveTraining={saveTraining}
