@@ -28,7 +28,7 @@ export default function AddTraining(props) {
     activity: "",
     date: new Date().toISOString(),
     duration: "",
-    customer: props.customerId
+    customer: props.customer
   });
 
   
