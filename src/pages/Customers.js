@@ -17,6 +17,7 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { forwardRef } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
+import EditCustomer from "../components/EditCustomer";
 import AddTraining from "../components/AddTraining";
 import CustomerTrainings from "../components/CustomerTrainings";
 
@@ -122,21 +123,6 @@ export default function Customers() {
       });
   };
 
-  const updateCustomer = (customer) => {
-    const editCustomer = {
-      firstname: customer.firstname,
-      lastname: customer.lastname,
-      email: customer.email,
-      phone: customer.phone,
-      streetaddress: customer.streetaddress,
-      postcode: customer.postcode,
-      city: customer.city,
-    };
-    updateCustomerHandler(editCustomer, customer.links[0].href)
-      .then((_) => fetchData())
-      .catch((err) => console.log(err));
-  };
-
   //add training
 
   const addTraining = (training) => {
@@ -164,9 +150,22 @@ export default function Customers() {
         render: (rowData) => <CustomerTrainings link={rowData.links[2].href} />,
       },
     ],
+
     columns: [
       {
+        title: "Edit",
+        field: "links[0].href",
+        render: (rowData) => (
+          <EditCustomer
+            updateCustomer={updateCustomerHandler}
+            customer={rowData}
+          />
+        ),
+        sorting: false,
+      },
+      {
         title: "",
+        field: "links[0].href",
         render: (rowData) => (
           <AddTraining
             saveTraining={saveTraining}
@@ -174,6 +173,7 @@ export default function Customers() {
           />
         ),
       },
+
       { title: "First Name", field: "firstname" },
       { title: "Last Name", field: "lastname" },
       { title: "Email", field: "email" },
@@ -205,11 +205,6 @@ export default function Customers() {
           onRowAdd: (newData) =>
             new Promise((resolve) => {
               saveCustomer(newData);
-              resolve();
-            }),
-          onRowUpdate: (newData, _) =>
-            new Promise((resolve) => {
-              updateCustomer(newData);
               resolve();
             }),
         }}
