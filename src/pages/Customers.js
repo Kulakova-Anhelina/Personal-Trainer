@@ -17,7 +17,6 @@ import Search from "@material-ui/icons/Search";
 import ViewColumn from "@material-ui/icons/ViewColumn";
 import { forwardRef } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
-import EditCustomer from "../components/EditCustomer";
 import AddTraining from "../components/AddTraining";
 import CustomerTrainings from "../components/CustomerTrainings";
 
@@ -68,20 +67,20 @@ export default function Customers() {
       });
   };
 
-  //Delete customer
-  const deleteCustomerHandler = (link) => {
-    fetch(link, { method: "DELETE" })
+  const deleteCustomer = (link) => {
+    fetch(link, {
+      method: "DELETE",
+    })
       .then((_) => fetchData())
       .then((_) => {
         setMsg("Customer deleted");
         setOpen(true);
       })
       .catch((err) => console.error(err));
-    console.log(link);
   };
 
-  //add customer
   const addCustomer = (customer) => {
+    console.log(customer);
     fetch("https://customerrest.herokuapp.com/api/customers", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -89,40 +88,25 @@ export default function Customers() {
     })
       .then((_) => fetchData())
       .then((_) => {
-        setMsg("Customer added");
+        setMsg("New customer added");
         setOpen(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   };
 
-  const saveCustomer = (customer) => {
-    const newCustomer = {
-      firstname: customer.firstname,
-      lastname: customer.lastname,
-      email: customer.email,
-      phone: customer.phone,
-      streetaddress: customer.streetaddress,
-      postcode: customer.postcode,
-      city: customer.city,
-    };
-    addCustomer(newCustomer);
-  };
-
-  //edit customer
-  const updateCustomerHandler = (customer, link) => {
+  const updateCustomer = (link, customer) => {
     fetch(link, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(customer),
     })
       .then((_) => fetchData())
-      .catch((err) => console.log(err))
       .then((_) => {
-        setMsg("Customer was edited");
+        setMsg("Customer information upadated");
         setOpen(true);
-      });
+      })
+      .catch((err) => console.error(err));
   };
-
   //add training
 
   const addTraining = (training) => {
@@ -153,18 +137,8 @@ export default function Customers() {
 
     columns: [
       {
-        title: "Edit",
-        field: "links[0].href",
-        render: (rowData) => (
-          <EditCustomer
-            updateCustomer={updateCustomerHandler}
-            customer={rowData}
-          />
-        ),
-        sorting: false,
-      },
-      {
         title: "",
+        editable: 'never',
         field: "links[0].href",
         render: (rowData) => (
           <AddTraining
@@ -197,14 +171,41 @@ export default function Customers() {
         detailPanel={state.detailPanel}
         data={customers}
         editable={{
-          onRowDelete: (link) =>
-            new Promise((resolve) => {
-              deleteCustomerHandler(link.links[0].href);
-              resolve();
-            }),
           onRowAdd: (newData) =>
             new Promise((resolve) => {
-              saveCustomer(newData);
+              const customer = {
+                firstname: newData.firstname,
+                lastname: newData.lastname,
+                streetaddress: newData.streetaddress,
+                postcode: newData.postcode,
+                city: newData.city,
+                email: newData.email,
+                phone: newData.phone,
+              };
+              addCustomer(customer);
+              handleClose();
+              resolve();
+            }),
+
+          onRowUpdate: (newData) =>
+            new Promise((resolve) => {
+              const customer = {
+                firstname: newData.firstname,
+                lastname: newData.lastname,
+                streetaddress: newData.streetaddress,
+                postcode: newData.postcode,
+                city: newData.city,
+                email: newData.email,
+                phone: newData.phone,
+              };
+              const link = newData.links[0].href;
+              updateCustomer(link, customer);
+              resolve();
+            }),
+
+          onRowDelete: (link) =>
+            new Promise((resolve) => {
+              deleteCustomer(link.links[0].href);
               resolve();
             }),
         }}

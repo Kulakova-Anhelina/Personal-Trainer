@@ -55,7 +55,7 @@ export default function AddTraining(props) {
         color="primary"
         onClick={handleClickOpen}
       >
-        ADD TRAINING
+      Add training
       </Button>
       <Dialog
         open={open}
@@ -76,7 +76,7 @@ export default function AddTraining(props) {
           <form className={classes.container} noValidate>
             <TextField
               id="datetime-local"
-              label="Book time for training"
+              label="Book time"
               type="datetime-local"
               defaultValue={
                 <Moment format="MMMM Do YYYY, h:mm:ss a">{training.date}</Moment>
