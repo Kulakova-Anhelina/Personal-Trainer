@@ -153,7 +153,6 @@ export default function Customers() {
 
     columns: [
       {
-        editable:"never",
         title: "Edit",
         field: "links[0].href",
         render: (rowData) => (
@@ -163,6 +162,7 @@ export default function Customers() {
           />
         ),
         sorting: false,
+        editable: false
       },
       {
         title: "",
@@ -172,7 +172,9 @@ export default function Customers() {
             saveTraining={saveTraining}
             customer={rowData.links[0].href}
           />
+        
         ),
+        sorting: false
       },
 
       { title: "First Name", field: "firstname" },
