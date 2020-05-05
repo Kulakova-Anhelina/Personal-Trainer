@@ -175,6 +175,7 @@ export default function Customers() {
         
         ),
         sorting: false
+       
       },
 
       { title: "First Name", field: "firstname" },

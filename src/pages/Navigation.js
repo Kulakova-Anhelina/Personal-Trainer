@@ -25,6 +25,7 @@ import Customers from "./Customers";
 import Trainings from "./Trainings";
 import Timetable from "./Timetable";
 import Statistics from "./Statistics"
+import Home from './Home'
 
 const drawerWidth = 240;
 
@@ -118,7 +119,7 @@ export default function PersistentDrawerLeft() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Personal Trainings
+            Fitness World
           </Typography>
         </Toolbar>
       </AppBar>
@@ -144,7 +145,7 @@ export default function PersistentDrawerLeft() {
             </div>
             <Divider />
             <List>
-            <ListItem component={Link} to={"/"}>
+            <ListItem component={Link} to={"/Home"}>
                 <ListItemIcon>
                   <HomeIcon/>
                 </ListItemIcon>
@@ -185,7 +186,7 @@ export default function PersistentDrawerLeft() {
           <div className={classes.drawerHeader} />
 
           <Switch>
-            <Route exact path="/" render={() => <div>Home Page</div>} />
+            <Route exact path="/" render={() => <Home/>} />
             <Route path="/Customers" render={() => <Customers />} />
             <Route path="/Trainings" render={() => <Trainings />} />
             <Route path="/Timetable" render={() => <Timetable />} />
