@@ -49,7 +49,7 @@ export default function Statistics() {
         <XAxis dataKey="activity" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="duration" fill="#8884d8" />
+        <Bar dataKey="duration" fill="#943126" />
       </BarChart>
     </div>
   );

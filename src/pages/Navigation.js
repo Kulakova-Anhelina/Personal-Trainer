@@ -19,24 +19,27 @@ import DirectionsRunIcon from "@material-ui/icons/DirectionsRun";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
-import HomeIcon from '@material-ui/icons/Home';
-import EqualizerIcon from '@material-ui/icons/Equalizer';
+import HomeIcon from "@material-ui/icons/Home";
+import EqualizerIcon from "@material-ui/icons/Equalizer";
 import Customers from "./Customers";
 import Trainings from "./Trainings";
 import Timetable from "./Timetable";
-import Statistics from "./Statistics"
-import Home from './Home'
+import Statistics from "./Statistics";
+import Home from "./Home";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+
   },
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
+     
+    
     }),
   },
   appBarShift: {
@@ -59,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+
+ 
   },
   drawerHeader: {
     display: "flex",
@@ -67,6 +72,7 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: "flex-end",
+  
   },
   content: {
     flexGrow: 1,
@@ -76,6 +82,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
+
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
@@ -103,12 +110,14 @@ export default function PersistentDrawerLeft() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
+       
         position="fixed"
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
+         
         })}
       >
-        <Toolbar>
+        <Toolbar  style = {{backgroundColor :  "#943126"}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -145,9 +154,9 @@ export default function PersistentDrawerLeft() {
             </div>
             <Divider />
             <List>
-            <ListItem component={Link} to={"/Home"}>
+              <ListItem component={Link} to={"/Home"}>
                 <ListItemIcon>
-                  <HomeIcon/>
+                  <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
               </ListItem>
@@ -171,7 +180,7 @@ export default function PersistentDrawerLeft() {
               </ListItem>
               <ListItem component={Link} to={"/Statistics"}>
                 <ListItemIcon>
-                  <EqualizerIcon/>
+                  <EqualizerIcon />
                 </ListItemIcon>
                 <ListItemText primary="Statistics" />
               </ListItem>
@@ -186,11 +195,11 @@ export default function PersistentDrawerLeft() {
           <div className={classes.drawerHeader} />
 
           <Switch>
-            <Route exact path="/" render={() => <Home/>} />
+            <Route exact path="/Home" render={() => <Home />} />
             <Route path="/Customers" render={() => <Customers />} />
             <Route path="/Trainings" render={() => <Trainings />} />
             <Route path="/Timetable" render={() => <Timetable />} />
-            <Route path="/Statistics" render={() => <Statistics/>} />
+            <Route path="/Statistics" render={() => <Statistics />} />
           </Switch>
         </main>
       </BrowserRouter>
