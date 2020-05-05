@@ -79,7 +79,7 @@ export default function Training() {
   };
 
 
-  const [state, setState] = useState({
+  const [state] = useState({
     columns: [
       { title: "Activity", field: "activity" },
       {
