@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^7.1.2",
     "loadash": "^1.0.0",
     "material-table": "^1.57.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "react": "^16.13.1",
     "react-bar-chart": "^0.1.2",
     "react-big-calendar": "^0.24.3",
